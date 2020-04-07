@@ -1,0 +1,29 @@
+class Random {
+
+    static int seed;
+
+    function void setSeed(int newSeed) {
+        let seed = newSeed;
+        return;
+    }
+
+    function String randString() {
+        var int oneness;
+        var Array strs;
+        let strs = Array.new(10);
+        let strs[0] = "KMLVSLKNKLDOGJDKGLHKHJNBMVLFJGHYRUFJGKHMVNVMCKFJGH";
+        let strs[1] = "LNKSDQWOIUKGJHKGNBJBMNNMBNMVKVMFKSDFSDFQWEEWRERSDF";
+        let strs[2] = "MKSFQWEASDZXCCVBBNMASDDFGFGHGHJGHJQWEQWEASDDFGCVBK";
+        let strs[3] = "BFLGZXCADFKJFHGBBDKFKBMNMNLVPOLIKFKHGJBVNCGDHASDZX";
+        let strs[4] = "NBJFLKINHYQPOLKMNBGHYTRFVCDEWXKJSFNDOISDFSDOFNJFJF";
+        let strs[5] = "QWEJFBGTVRFNGIBNKFKFLDMVKBNSLFIEQOEIWOCMZZNCSMDKFK";
+        let strs[6] = "MNBMVZAQXSCBZBVNBMBKFJGHUTYFHGJHKLJGASDZXCVBNNMLKG";
+        let strs[7] = "TYUOIZPOSOKGJPHOKFMVNBKFLOEPLDSANBMVCBASDFKFJRNFMK";
+        let strs[8] = "IUOPOLJLHVAALFPVMVNCTWQEUFKGJHKPOGLMBNQWECFRNHUJMM";
+        let strs[9] = "TOMEROTYUBGJJFNCJDHGNASDIPOWELJKZXCMNSDFASDZXCCVBP";
+
+        let oneness = (seed - ((seed / 10) * 10));
+
+        return strs[oneness];
+    }
+}

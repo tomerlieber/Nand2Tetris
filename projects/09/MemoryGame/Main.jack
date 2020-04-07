@@ -1,0 +1,78 @@
+ /** Runs the game: handles the user's inputs and change the game accordingly */
+class Main {
+    function void main() {
+    var boolean exit;
+  	var String word, a;
+	var int level, i;
+  	var char key;
+
+    let exit = false;
+    let level = 0;
+
+  	do Output.moveCursor(4,20);
+  	do Output.printString("Welcome to the Memory Game");
+  	do Screen.drawLine(158, 57, 367, 57);
+    do Sys.wait(1000);
+	do Random.setSeed(RandSeed.getSeed());
+    let word = Random.randString();
+
+    while (~exit) {
+    	let level = level + 1;
+        let i = 0;
+
+        do Output.moveCursor(2,28);
+    	do Output.printString("Level: ");
+    	do Output.printInt(level);
+
+    	do Sys.wait(1500);
+    	do Output.moveCursor(8,27);
+    	do Output.printString("Follow me!");
+
+    	do Screen.drawRectangle(230, 112, 285, 165);
+    	do Screen.setColor(false);
+    	do Screen.drawRectangle(235, 117, 280, 160);
+    	do Screen.setColor(true);
+
+    	do Sys.wait(500);
+
+        while (i < level) {
+      		do Output.moveCursor(12,32);
+            do Output.printChar(word.charAt(i));
+            let i = i + 1;
+            do Sys.wait(1000);  // delays the next movement
+        }
+
+        do Output.moveCursor(8,27);
+        do Output.printString("Your Turn!");
+        do Output.moveCursor(12,32);
+        do Sys.wait(500);
+
+        let i = 0;
+
+        while ((i < level) & ~exit) {
+
+			do Output.moveCursor(12,32);
+        	let key = Keyboard.readChar();
+
+        	 if (~(key = word.charAt(i))) {
+                let exit = true;
+            }
+
+            let i = i + 1;
+            do Sys.wait(100);  // delays the next movement
+        }
+
+        do Sys.wait(300);
+        do Screen.clearScreen();
+    }
+
+    do Screen.clearScreen();
+    do Output.moveCursor(9,25);
+    do Output.printString("Game Over!!!");
+    do Output.moveCursor(11,20);
+    do Output.printString("You've reached level: ");
+    do Output.printInt(level);
+
+  	return;
+  	}
+}
