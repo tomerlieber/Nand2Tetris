@@ -1,4 +1,4 @@
-# From Nand to Tetris - Building a Modern Computer from First Principles.
+# From Nand to Tetris
 The Repository is my implementation of the assignments in "From Nand to Tetris" course. The objective of the course is to build a Hack Hardware Platform, a simple computer - part 1, and develop jack language to build the software hierarchy. The Course is divided into 12 modules. For each module we have to do a project to be used in the next project, to build the hardware and software hierarchy progressively.
 
 ## Hardware Layer
