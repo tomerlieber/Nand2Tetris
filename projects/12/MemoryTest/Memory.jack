@@ -1,0 +1,88 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Memory.jack
+
+/**
+ * Memory operations library.
+ */ 
+class Memory {
+
+    static Array ram;
+    static int heap;
+
+    /** Initializes memory parameters. */
+    function void init() {
+        
+        let ram = 0; // memory base
+        let heap = 2048; // heap base
+
+        // The length and next properties of the block's data part beginning in 
+        // address addr can be realized by heap[addr-2] and heap[addr-1], respectively.
+        let ram[heap] = 16384 - 2048; // heap length
+        let ram[heap + 1] = -1; // next block (-1 means that there is no next empty block)
+        return;
+    }
+
+    /** Returns the value of the main memory at the given address. */
+    function int peek(int address) {
+        return ram[address];
+    }
+
+    /** Sets the value of the main memory at this address
+     *  to the given value. */
+    function void poke(int address, int value) {
+        let ram[address] = value;
+        return;
+    }
+
+    /** finds and allocates from the heap a memory block of the 
+     *  specified size and returns a reference to its base address. */
+    function int alloc(int size) {
+
+        var int prevBlock;
+        var int currBlock;
+        var int next;
+        var int returnAddress;
+        
+        let prevBlock = heap;
+        let currBlock = heap;
+        let next = heap + 1;
+        let returnAddress = -1;
+        
+        // Search in heap using first-fit heuristics to obtain a block with block.size >= size
+        while (~(ram[currBlock] > size) & ~(ram[next] = -1)) {
+            let prevBlock = currBlock;
+            let currBlock = ram[next];
+            let next = ram[next + 1];
+        }
+
+        // Check if such block is found.
+        if (~(next = -1)) { //found free block in the middle of the list
+
+            // Check if the found block is big enough to carve a block of size size+2 from it.
+            if (currBlock < (size + 3)) {
+                let ram[prevBlock + 1] = ram[currBlock + 1];
+                let ram[currBlock] = size + 1;
+                let returnAddress = currBlock + 1;
+            }
+            else {
+                let ram[currBlock] = ram[currBlock] - size - 1;
+                let returnAddress = currBlock + ram[currBlock];
+                let ram[returnAddress - 1] = size + 1;
+            }
+        }
+
+        // Return the base address of the block’s data part
+        return returnAddress;
+    }
+
+    /** De-allocates the given object and frees its space. */
+    function void deAlloc(int object) {
+        // Append object to the free list
+        let ram[object] = ram[object - 1];
+        let ram[object + 1] = ram[heap + 1];
+        let ram[heap + 1] = object;
+        return;
+    }
+}
